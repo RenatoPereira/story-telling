@@ -1,0 +1,9 @@
+.button {
+  border-color: rgb(255 255 255 / 25%);
+  background-color: rgb(255 255 255 / 10%);
+  color: #fff;
+}
+
+.button:hover {
+  background-color: rgb(255 255 255 / 20%);
+}

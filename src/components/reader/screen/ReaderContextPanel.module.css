@@ -1,0 +1,12 @@
+.contextPanel {
+  padding-inline: var(--reader-layout-narrator-padding-x);
+  padding-block: var(--reader-layout-narrator-padding-y);
+  color: #f9f1dc;
+}
+
+.contextText {
+  font-family: var(--font-story-script), cursive;
+  font-size: var(--reader-font-narrator-text-size);
+  line-height: var(--reader-font-narrator-text-line-height);
+  font-weight: var(--reader-font-narrator-text-weight);
+}

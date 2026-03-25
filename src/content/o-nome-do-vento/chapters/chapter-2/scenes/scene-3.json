@@ -1,0 +1,90 @@
+{
+  "id": "scene-3",
+  "title": "A coisa na mesa",
+  "backgroundImage": "/assets/backgrounds/estalagem.svg",
+  "audio": {
+    "enabled": true,
+    "defaultVoice": "alloy",
+    "ambientTrack": "/assets/audio/cap1-mesa.mp3"
+  },
+  "blocks": [
+    {
+      "id": "scene-3-context-1",
+      "type": "context",
+      "text": "Jake se virou para a porta e parou no meio da frase. Carter entrou pálido e sujo de sangue, segurando junto ao peito uma velha manta de sela com forma estranha. Disse que estava bem, largou a trouxa sobre a mesa e todos viram sua roupa retalhada em cortes compridos e retos. Quase todo o sangue, explicou ele, era da Nelly, morta depois da Velha Ponte de Pedra.",
+      "minDurationMs": 3500,
+      "charsPerSecond": 31
+    },
+    {
+      "id": "scene-3-context-2",
+      "type": "context",
+      "text": "Cob explodiu de raiva assustada, dizendo que havia avisado para Carter não sair sozinho. Graham tentava fazê-lo sentar. Carter insistia: foi um só, mas não era o que todos pensavam. Então puxou a manta ensanguentada. O conteúdo rolou e bateu na madeira como um saco de seixos: era uma aranha do tamanho de uma roda de carroça, negra como uma lousa.",
+      "minDurationMs": 3600,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-3-context-3",
+      "type": "context",
+      "text": "O aprendiz de ferreiro deu um pulo para trás e quase caiu; Cob ficou boquiaberto; Graham, Shep e Jake se afastaram levando as mãos ao rosto. O silêncio encheu o aposento feito suor frio. O hospedeiro franziu o cenho e murmurou baixinho: ainda não era para eles terem avançado tanto para o oeste. Todos ouviram.",
+      "minDurationMs": 3300,
+      "charsPerSecond": 31
+    },
+    {
+      "id": "scene-3-context-4",
+      "type": "dialogue",
+      "text": "Scrael. Eu pensava que as montanhas... Ah, não. Não, é claro que não. Foi só uma história que ouvi.",
+      "minDurationMs": 4300,
+      "charsPerSecond": 30,
+      "speaker": {
+        "characterId": "kote",
+        "side": "left",
+        "imageKey": "contido"
+      }
+    },
+    {
+      "id": "scene-3-context-5",
+      "type": "context",
+      "text": "Carter contou o que houve: a coisa pulou de uma árvore e começou a andar pelo corpo da Nelly, cortando-a com os pés. Depois veio atrás dele, rastejando por tudo. Ele conseguiu arrancá-la, pular em cima dela com toda a força, e mesmo assim foi atacado de novo até conseguir dominá-la. O hospedeiro cutucou o corpo e disse que não havia sangue nem órgãos, só cinza por dentro, feito um cogumelo.",
+      "minDurationMs": 4200,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-3-context-6",
+      "type": "dialogue",
+      "text": "Só há um jeito de saber com certeza: ferro ou fogo.",
+      "minDurationMs": 4700,
+      "charsPerSecond": 29,
+      "speaker": {
+        "characterId": "kote",
+        "side": "left",
+        "imageKey": "serio"
+      }
+    },
+    {
+      "id": "scene-3-context-7",
+      "type": "context",
+      "text": "O hospedeiro bateu o gusa na mesa e concluiu: bem, acho que isso resolve a questão. Horas depois, na entrada da Marco do Percurso, Kote deixou os olhos relaxarem na escuridão da estrada e respirou fundo o ar outonal, inquieto, como se esperasse alguma coisa. Trancou portas e venezianas, varreu cada canto, lavou mesas e bar, poliu garrafas sem pressa e subiu para o quarto austero, com lareira de pedra negra e um baú de roah aos pés da cama.",
+      "minDurationMs": 4400,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-3-context-8",
+      "type": "dialogue",
+      "text": "Hoje as histórias devem ter sido boas, Reshi.",
+      "minDurationMs": 3400,
+      "charsPerSecond": 31,
+      "speaker": {
+        "characterId": "bast",
+        "side": "right",
+        "imageKey": "curioso"
+      },
+      "listeners": [
+        {
+          "characterId": "kote",
+          "side": "left",
+          "imageKey": "contido"
+        }
+      ]
+    }
+  ]
+}

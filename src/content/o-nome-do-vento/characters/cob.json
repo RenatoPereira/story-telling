@@ -1,0 +1,9 @@
+{
+  "id": "cob",
+  "name": "Cob",
+  "defaultPortraitImage": "/assets/characters/cronista-neutral.svg",
+  "portraits": {
+    "neutral": "/assets/characters/cronista-neutral.svg",
+    "narrando": "/assets/characters/cronista.svg"
+  }
+}

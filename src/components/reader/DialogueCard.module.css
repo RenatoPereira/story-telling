@@ -1,0 +1,30 @@
+.dialoguePanel {
+  border-radius: var(--reader-layout-dialogue-radius);
+  color: var(--app-fg);
+}
+
+.dialogueNameWrap {
+  position: absolute;
+  bottom: 100%;
+  left: 1.25rem;
+}
+
+.dialogueName {
+  font-size: var(--reader-font-dialogue-name-size);
+  line-height: var(--reader-font-dialogue-name-line-height);
+  font-weight: var(--reader-font-dialogue-name-weight);
+  color: #f6e5be;
+}
+
+.dialogueTextWrap {
+  padding-inline: var(--reader-layout-dialogue-padding-x);
+  padding-bottom: var(--reader-layout-dialogue-padding-y);
+  padding-top: calc(var(--reader-layout-dialogue-padding-y) / 2);
+}
+
+.dialogueText {
+  font-size: var(--reader-font-dialogue-text-size);
+  line-height: var(--reader-font-dialogue-text-line-height);
+  font-weight: var(--reader-font-dialogue-text-weight);
+  color: #f9f1dc;
+}

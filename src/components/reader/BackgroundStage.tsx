@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
+import styles from "./BackgroundStage.module.css";
 
 type BackgroundStageProps = {
   src: string;
@@ -18,7 +19,7 @@ export function BackgroundStage({ src, alt }: BackgroundStageProps) {
       >
         <Image src={src} alt={alt} fill priority className="object-cover" />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/45" />
+      <div className={`${styles.overlay} absolute inset-0`} />
     </div>
   );
 }

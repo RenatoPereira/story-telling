@@ -1,0 +1,20 @@
+.main {
+  background-color: var(--app-bg);
+  color: var(--app-fg);
+}
+
+.panel {
+  background-color: var(--app-panel);
+}
+
+.mutedText {
+  color: var(--app-muted);
+}
+
+.selectSurface {
+  background-color: var(--app-panel-strong);
+}
+
+.backLink {
+  color: var(--app-accent);
+}

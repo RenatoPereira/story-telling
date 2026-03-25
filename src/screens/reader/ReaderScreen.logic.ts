@@ -7,8 +7,9 @@ import {
   getCurrentBlock,
   type PlaybackStatus,
 } from "@/lib/story/readerEngine";
-import type { ReaderSettings } from "@/lib/config/readerSettings";
+import { createStoryContentManager } from "@/lib/story/storyContentManager";
 import type { StoryBlock, StoryBook } from "@/lib/story/types";
+import type { ReaderSettings } from "@/stores/reader-settings";
 
 type ReaderController = {
   currentChapterTitle: string;
@@ -19,6 +20,8 @@ type ReaderController = {
   currentSceneTitle: string;
   currentBackground: string;
   currentAudioVoice: string;
+  currentAmbientTrack: string;
+  isCurrentSceneAudioEnabled: boolean;
   currentSpeechText: string;
   effectiveCharsPerSecond: number;
   onTypingComplete: () => void;
@@ -45,12 +48,14 @@ type ReaderControllerParams = {
   storyBook: StoryBook;
   initialBlockId?: string | null;
   settings: ReaderSettings;
+  onAutoplayChange: (value: boolean) => void;
 };
 
 export function useReaderScreenController({
   storyBook,
   initialBlockId,
   settings,
+  onAutoplayChange,
 }: ReaderControllerParams): ReaderController {
   const flatSceneEntries = useMemo(
     () =>
@@ -71,6 +76,10 @@ export function useReaderScreenController({
         })),
       ),
     [flatSceneEntries],
+  );
+  const contentManager = useMemo(
+    () => createStoryContentManager(storyBook),
+    [storyBook],
   );
 
   const initialPosition = useMemo(
@@ -93,7 +102,6 @@ export function useReaderScreenController({
   const [currentTimelineIndex, setCurrentTimelineIndex] =
     useState(initialTimelineIndex);
   const [playbackStatus, setPlaybackStatus] = useState<PlaybackStatus>("playing");
-  const [autoplay, setAutoplayState] = useState(settings.autoplay);
   const [typingDone, setTypingDone] = useState(false);
   const [historyIndexes, setHistoryIndexes] = useState<number[]>([
     initialTimelineIndex,
@@ -197,7 +205,7 @@ export function useReaderScreenController({
     const remainingMs = Math.max(effectiveMinDurationMs - elapsedMs, 0);
 
     const timeoutId = window.setTimeout(() => {
-      if (autoplay) {
+      if (settings.autoplay) {
         nextBlock();
         return;
       }
@@ -205,7 +213,13 @@ export function useReaderScreenController({
     }, remainingMs);
 
     return () => window.clearTimeout(timeoutId);
-  }, [autoplay, effectiveMinDurationMs, nextBlock, playbackStatus, typingDone]);
+  }, [
+    effectiveMinDurationMs,
+    nextBlock,
+    playbackStatus,
+    settings.autoplay,
+    typingDone,
+  ]);
 
   const completionMessage = useMemo(() => {
     if (playbackStatus === "completed") {
@@ -219,12 +233,12 @@ export function useReaderScreenController({
 
   const setAutoplay = useCallback(
     (value: boolean) => {
-      setAutoplayState(value);
+      onAutoplayChange(value);
       if (value && playbackStatus === "waiting_continue") {
         nextBlock();
       }
     },
-    [nextBlock, playbackStatus],
+    [nextBlock, onAutoplayChange, playbackStatus],
   );
 
   const historyEntries = useMemo(
@@ -253,13 +267,17 @@ export function useReaderScreenController({
     currentSceneTitle: currentScene.title,
     currentBackground: currentScene.backgroundImage,
     currentAudioVoice: currentScene.audio.defaultVoice,
+    currentAmbientTrack: currentScene.audio.ambientTrack,
+    isCurrentSceneAudioEnabled: currentScene.audio.enabled,
     currentSpeechText:
       currentBlock.type === "dialogue"
-        ? `${currentBlock.speaker.characterName}: ${currentBlock.text}`
+        ? `${contentManager.getCharacterById(currentBlock.speaker.characterId)?.name ?? currentBlock.speaker.characterId}: ${
+            currentBlock.text
+          }`
         : currentBlock.text,
     effectiveCharsPerSecond,
     onTypingComplete,
-    autoplay,
+    autoplay: settings.autoplay,
     playbackStatus,
     canContinue,
     canGoPrevious,

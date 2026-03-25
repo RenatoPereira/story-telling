@@ -1,0 +1,88 @@
+{
+  "id": "scene-4",
+  "title": "Reshi e Bast",
+  "backgroundImage": "/assets/backgrounds/noite.svg",
+  "audio": {
+    "enabled": true,
+    "defaultVoice": "alloy",
+    "ambientTrack": "/assets/audio/cap1-reshi-bast.mp3"
+  },
+  "blocks": [
+    {
+      "id": "scene-4-context-1",
+      "type": "dialogue",
+      "text": "Bast, era um scrael. Eu o vi. Ele teve sorte, só isso. Se alguém perguntar, diga que meu avô era guarda de caravanas e me ensinou a limpar e suturar ferimentos.",
+      "minDurationMs": 3900,
+      "charsPerSecond": 30,
+      "speaker": {
+        "characterId": "kote",
+        "side": "left",
+        "imageKey": "calmo"
+      },
+      "listeners": [
+        {
+          "characterId": "bast",
+          "side": "right",
+          "imageKey": "alarmado"
+        }
+      ]
+    },
+    {
+      "id": "scene-4-context-2",
+      "type": "dialogue",
+      "text": "Não existe isso de scrael sozinho. Reshi, você não pode deixar que eles se metam nisso sozinhos.",
+      "minDurationMs": 3600,
+      "charsPerSecond": 30,
+      "speaker": {
+        "characterId": "bast",
+        "side": "right",
+        "imageKey": "alarmado"
+      },
+      "listeners": [
+        {
+          "characterId": "kote",
+          "side": "left",
+          "imageKey": "calmo"
+        }
+      ]
+    },
+    {
+      "id": "scene-4-context-3",
+      "type": "dialogue",
+      "text": "Eu me certifiquei de tudo: cova funda, fogo forte, madeira certa e nada de lembranças. Não sou idiota, você sabe.",
+      "minDurationMs": 3600,
+      "charsPerSecond": 30,
+      "speaker": {
+        "characterId": "kote",
+        "side": "left",
+        "imageKey": "firme"
+      },
+      "listeners": [
+        {
+          "characterId": "bast",
+          "side": "right",
+          "imageKey": "leal"
+        }
+      ]
+    },
+    {
+      "id": "scene-4-context-4",
+      "type": "dialogue",
+      "text": "Eu não poderia ir embora, Reshi. Quem mais me ensinaria?",
+      "minDurationMs": 5000,
+      "charsPerSecond": 29,
+      "speaker": {
+        "characterId": "bast",
+        "side": "right",
+        "imageKey": "leal"
+      },
+      "listeners": [
+        {
+          "characterId": "kote",
+          "side": "left",
+          "imageKey": "firme"
+        }
+      ]
+    }
+  ]
+}

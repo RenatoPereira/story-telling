@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useMemo } from "react";
 
-import {
-  saveReaderSettings,
-} from "@/lib/config/readerSettings";
-import { useReaderSettings } from "@/lib/config/useReaderSettings";
 import { colorPalettes } from "@/lib/theme/colorPalettes";
+import {
+  updateReaderSettings,
+  useReaderSettings,
+} from "@/stores/reader-settings";
+import styles from "./SettingsScreen.module.css";
 
 function toDisplayValue(value: number): string {
   return `${value.toFixed(2)}x`;
@@ -22,13 +23,14 @@ export function SettingsScreen() {
       dialogueDelay: toDisplayValue(settings.dialogueDelayMultiplier),
       contextDelay: toDisplayValue(settings.contextDelayMultiplier),
       fontScale: toDisplayValue(settings.fontScale),
+      ambientVolume: `${Math.round(settings.ambientAudioVolume * 100)}%`,
     }),
     [settings],
   );
 
   return (
-    <main className="min-h-screen bg-[var(--app-bg)] px-4 py-8 text-[var(--app-fg)]">
-      <section className="mx-auto max-w-3xl rounded-2xl bg-[var(--app-panel)] p-5 backdrop-blur-md">
+    <main className={`${styles.main} min-h-screen px-4 py-8`}>
+      <section className={`${styles.panel} mx-auto max-w-3xl rounded-2xl p-5 backdrop-blur-md`}>
         <h1 className="mb-4 text-2xl font-bold">Configuracoes de leitura</h1>
 
         <div className="mb-4 grid gap-2">
@@ -43,13 +45,12 @@ export function SettingsScreen() {
             step="0.05"
             value={settings.textSpeedMultiplier}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 textSpeedMultiplier: Number(event.target.value),
               })
             }
           />
-          <span className="text-xs text-[var(--app-muted)]">{values.textSpeed}</span>
+          <span className={`${styles.mutedText} text-xs`}>{values.textSpeed}</span>
         </div>
 
         <div className="mb-4 grid gap-2">
@@ -64,13 +65,12 @@ export function SettingsScreen() {
             step="0.05"
             value={settings.dialogueDelayMultiplier}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 dialogueDelayMultiplier: Number(event.target.value),
               })
             }
           />
-          <span className="text-xs text-[var(--app-muted)]">
+          <span className={`${styles.mutedText} text-xs`}>
             {values.dialogueDelay}
           </span>
         </div>
@@ -87,13 +87,12 @@ export function SettingsScreen() {
             step="0.05"
             value={settings.contextDelayMultiplier}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 contextDelayMultiplier: Number(event.target.value),
               })
             }
           />
-          <span className="text-xs text-[var(--app-muted)]">
+          <span className={`${styles.mutedText} text-xs`}>
             {values.contextDelay}
           </span>
         </div>
@@ -110,13 +109,12 @@ export function SettingsScreen() {
             step="0.05"
             value={settings.fontScale}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 fontScale: Number(event.target.value),
               })
             }
           />
-          <span className="text-xs text-[var(--app-muted)]">{values.fontScale}</span>
+          <span className={`${styles.mutedText} text-xs`}>{values.fontScale}</span>
         </div>
 
         <div className="mb-4 grid gap-2">
@@ -126,10 +124,9 @@ export function SettingsScreen() {
           <select
             id="accessibility-mode"
             value={settings.accessibilityMode}
-            className="rounded-md bg-[var(--app-panel-strong)] px-3 py-2"
+            className={`${styles.selectSurface} rounded-md px-3 py-2`}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 accessibilityMode: event.target.value as
                   | "default"
                   | "high-contrast"
@@ -150,10 +147,9 @@ export function SettingsScreen() {
           <select
             id="color-system"
             value={settings.colorPalette}
-            className="rounded-md bg-[var(--app-panel-strong)] px-3 py-2"
+            className={`${styles.selectSurface} rounded-md px-3 py-2`}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 colorPalette: event.target.value as keyof typeof colorPalettes,
               })
             }
@@ -175,16 +171,52 @@ export function SettingsScreen() {
             type="checkbox"
             checked={settings.autoplay}
             onChange={(event) =>
-              saveReaderSettings({
-                ...settings,
+              updateReaderSettings({
                 autoplay: event.target.checked,
               })
             }
           />
         </div>
 
+        <div className="mb-4 mt-4 grid gap-2">
+          <label className="text-sm" htmlFor="ambient-audio-enabled">
+            Permitir musica ambiente na leitura
+          </label>
+          <input
+            id="ambient-audio-enabled"
+            type="checkbox"
+            checked={settings.ambientAudioEnabled}
+            onChange={(event) =>
+              updateReaderSettings({
+                ambientAudioEnabled: event.target.checked,
+              })
+            }
+          />
+        </div>
+
+        <div className="mb-2 grid gap-2">
+          <label className="text-sm" htmlFor="ambient-audio-volume">
+            Volume da musica ambiente
+          </label>
+          <input
+            id="ambient-audio-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={settings.ambientAudioVolume}
+            disabled={!settings.ambientAudioEnabled}
+            onChange={(event) =>
+              updateReaderSettings({
+                ambientAudioVolume: Number(event.target.value),
+              })
+            }
+          />
+          <span className={`${styles.mutedText} text-xs`}>{values.ambientVolume}</span>
+        </div>
+
         <div className="mt-4 flex flex-wrap gap-3">
-          <Link className="text-[var(--app-accent)] underline" href="/">
+          <Link className={`${styles.backLink} underline`} href="/">
             Voltar para leitura
           </Link>
         </div>

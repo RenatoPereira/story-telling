@@ -16,8 +16,10 @@
   - `feature-name/ComponentName.tsx` (structure)
   - `feature-name/ComponentName.logic.ts` (logic)
   - styles should be composed with Tailwind utility classes directly in JSX
+- Screen-level files must live in `src/screens/<screen-name>/` and must not be created under `src/components/`.
 - Avoid flat component files directly under `components/` for new work.
 - Keep orchestration and state transitions in logic files, not directly in JSX trees.
+- Keep global client state in `src/stores/<domain>/` (Zustand), not inside view components.
 - Avoid CSS Modules and keep styling in Tailwind for consistency.
 
 ## Design System And Atomic Design
@@ -45,3 +47,8 @@
 ## Performance
 - Avoid unnecessary re-renders by memoizing derived values.
 - Load only required scene assets for current flow.
+
+## Content Authoring Structure
+- Prefer split content files over one large JSON blob.
+- Organize by book -> chapter -> scene hierarchy and keep one character per file.
+- Use a manager/index layer for identifier-based lookup instead of repeated nested loops in components.

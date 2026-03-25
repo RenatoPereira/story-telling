@@ -9,11 +9,13 @@
 
 ## File Names
 - Component structure file: `ComponentName.tsx`
+- Component hooks file: `ComponentName.hooks.ts`
 - Component logic file: `ComponentName.logic.ts`
 - Styling approach: Tailwind utility classes in component JSX
 - Test files: `ComponentName.test.tsx` or `moduleName.test.ts`
 - Preferred folder format: `component-name/ComponentName.tsx`
-- Screen files: `src/screens/<screen-name>/ScreenName.tsx` and `ScreenName.logic.ts`
+- Screen files: `src/screens/<screen-name>/ScreenName.tsx`, `ScreenName.hooks.ts`, and `ScreenName.logic.ts`
+- Baseline structure for screens/components: presentation file + style file + hooks file
 
 ## Story Content JSON
 - Keys: `camelCase`

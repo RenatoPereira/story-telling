@@ -5,7 +5,7 @@
   "audio": {
     "enabled": true,
     "defaultVoice": "alloy",
-    "ambientTrack": "/assets/audio/prologo-silencio.mp3"
+    "ambientTrack": "/assets/audio/prologo-silencio.wav"
   },
   "blocks": [
     {

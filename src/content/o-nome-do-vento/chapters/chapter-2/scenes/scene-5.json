@@ -5,7 +5,7 @@
   "audio": {
     "enabled": true,
     "defaultVoice": "alloy",
-    "ambientTrack": "/assets/audio/cap1-estradas.mp3"
+    "ambientTrack": "/assets/audio/cap1-estradas.wav"
   },
   "blocks": [
     {

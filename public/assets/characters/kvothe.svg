@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#3a1f28" />
+  <circle cx="300" cy="220" r="110" fill="#d8b18a" />
+  <rect x="170" y="340" width="260" height="180" rx="24" fill="#5e2e3d" />
+  <text x="50%" y="560" text-anchor="middle" fill="#f4d7be" font-size="52" font-family="Arial, sans-serif">
+    Kvothe
+  </text>
+</svg>

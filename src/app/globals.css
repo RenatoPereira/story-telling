@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --app-bg: #090d1a;
+  --app-fg: #f4f6ff;
+  --app-panel: rgb(10 14 24 / 82%);
+  --app-panel-strong: rgb(7 10 18 / 90%);
+  --app-muted: #c7cff5;
+  --app-accent: #8fb2ff;
+  --app-danger: #ffb4b4;
+  --app-overlay: rgb(0 0 0 / 52%);
+  --font-scale: 1;
+}
+
+@theme inline {
+  --color-background: var(--app-bg);
+  --color-foreground: var(--app-fg);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--app-fg);
+  font-size: calc(16px * var(--font-scale));
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+:root[data-accessibility-mode="high-contrast"] {
+  --app-panel: rgb(0 0 0 / 90%);
+  --app-panel-strong: rgb(0 0 0 / 96%);
+  --app-muted: #fff;
+  --app-accent: #ffd700;
+}
+
+:root[data-accessibility-mode="reduced-motion"] *,
+:root[data-accessibility-mode="reduced-motion"] *::before,
+:root[data-accessibility-mode="reduced-motion"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}

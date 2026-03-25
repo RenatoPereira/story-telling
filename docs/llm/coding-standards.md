@@ -48,6 +48,10 @@
 - Avoid unnecessary re-renders by memoizing derived values.
 - Load only required scene assets for current flow.
 
+## Commit Quality Gate
+- Pre-commit hook must run `npx lint-staged` and `npm run build`.
+- Commits are blocked when build verification fails.
+
 ## Content Authoring Structure
 - Prefer split content files over one large JSON blob.
 - Organize by book -> chapter -> scene hierarchy and keep one character per file.

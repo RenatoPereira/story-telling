@@ -4,15 +4,21 @@ test("supports continue mode and block transitions", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByText("O Nome do Vento")).toBeVisible();
-  await page.getByRole("button", { name: "Autoplay: ligado" }).click();
-  await expect(
-    page.getByRole("button", { name: "Autoplay: desligado" }),
-  ).toBeVisible();
+  const autoplayButton = page.getByRole("button", { name: "Alternar autoplay" });
+  await autoplayButton.click();
+  await expect(autoplayButton).toHaveAttribute("aria-pressed", "false");
 
-  await expect(
-    page.getByText("Concluido - pronto para proximo."),
-  ).toBeVisible({ timeout: 12000 });
+  const continueButton = page.getByRole("button", { name: "Continuar" });
+  await expect(continueButton).toBeEnabled({ timeout: 12000 });
 
-  await page.getByRole("button", { name: "Continuar" }).click();
-  await expect(page.getByText("Cronista")).toBeVisible();
+  const initialUrl = new URL(page.url());
+  const initialBlockId = initialUrl.searchParams.get("blockId");
+
+  await continueButton.click();
+  await expect
+    .poll(() => {
+      const url = new URL(page.url());
+      return url.searchParams.get("blockId");
+    })
+    .not.toBe(initialBlockId);
 });

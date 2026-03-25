@@ -36,6 +36,7 @@
 - Ensure controls have clear disabled/loading states.
 - Keep animation subtle and non-blocking.
 - Use palette variables (`--app-*`) for colors instead of hardcoded hex values.
+- Follow the official visual tokens in `docs/llm/style-system.md`.
 
 ## Error Handling
 - Return actionable messages from API routes.

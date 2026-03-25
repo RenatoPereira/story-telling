@@ -10,6 +10,9 @@
   --app-danger: #ffb4b4;
   --app-overlay: rgb(0 0 0 / 52%);
   --font-scale: 1;
+  --safe-area-side: 24px;
+  --header-height: 64px;
+  --bottom-height: 80px;
 }
 
 @theme inline {
@@ -22,6 +25,7 @@
 body {
   background: var(--app-bg);
   color: var(--app-fg);
+  font-size: 16px;
   font-size: calc(16px * var(--font-scale));
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }

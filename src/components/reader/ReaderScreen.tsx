@@ -3,6 +3,14 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import {
+  FiClock,
+  FiPause,
+  FiPlay,
+  FiSettings,
+  FiSkipBack,
+  FiSkipForward,
+} from "react-icons/fi";
 
 import { AnimatedText } from "@/components/reader/AnimatedText";
 import { BackgroundStage } from "@/components/reader/BackgroundStage";
@@ -11,6 +19,7 @@ import { ReaderHistoryModal } from "@/components/reader/history-modal/ReaderHist
 import { useReaderScreenController } from "@/components/reader/ReaderScreen.logic";
 import { Button } from "@/design-system/atoms/button/Button";
 import { useReaderSettings } from "@/lib/config/useReaderSettings";
+import { styleConfig } from "@/lib/theme/styleConfig";
 import type { StoryBook } from "@/lib/story/types";
 
 type ReaderScreenProps = {
@@ -107,6 +116,8 @@ export function ReaderScreen({ storyBook, initialBlockId }: ReaderScreenProps) {
 
   const block = controller.currentBlock;
   const isContextBlock = block.type === "context";
+  const iconSizeMd = styleConfig.iconography.md;
+  const iconSizeLg = styleConfig.iconography.lg;
 
   return (
     <div className="relative min-h-screen text-[var(--app-fg)]">
@@ -115,44 +126,96 @@ export function ReaderScreen({ storyBook, initialBlockId }: ReaderScreenProps) {
         alt={controller.currentSceneTitle}
       />
 
-      <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1240px] flex-col px-4 pb-64 pt-4 md:px-8">
-        <section className="mx-auto mt-2 w-full max-w-[1120px] rounded-md border border-[#c5ab7a]/40 bg-black/45 px-3 py-2 shadow-xl backdrop-blur-md md:px-5">
+      <main className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1240px] flex-col px-[var(--safe-area-side)] pb-32 pt-4">
+        <header
+          className="mx-auto mb-4 flex w-full max-w-[1120px] items-center justify-between rounded-md border border-[#c5ab7a]/40 bg-black/45 shadow-xl backdrop-blur-md"
+          style={{
+            height: styleConfig.layout.headerHeightPx,
+            gap: styleConfig.layout.headerGapPx,
+            paddingInline: styleConfig.layout.headerPaddingX,
+          }}
+        >
+          <h1
+            className="m-0 text-center text-[#f6e7c5]"
+            style={{
+              fontSize: styleConfig.typography.chapterTitle.fontSizePx,
+              fontWeight: styleConfig.typography.chapterTitle.fontWeight,
+              lineHeight: `${styleConfig.typography.chapterTitle.lineHeightPx}px`,
+            }}
+          >
+            {controller.currentChapterTitle}
+          </h1>
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={() => setHistoryOpen(true)}
+              className="inline-flex items-center gap-2 px-3 py-2 text-[14px] font-medium leading-5 uppercase"
+            >
+              <FiClock size={iconSizeMd} />
+              Historico
+            </Button>
+            <Link
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-[var(--app-panel)] px-3 py-2 text-[14px] font-medium leading-5 uppercase text-[var(--app-fg)] backdrop-blur-md"
+              href="/settings"
+            >
+              <FiSettings size={iconSizeMd} />
+              Config
+            </Link>
+          </div>
+        </header>
+
+        <section className="mx-auto w-full max-w-[1120px] rounded-md bg-black/45 shadow-xl backdrop-blur-md">
           <p className="mb-1 text-xs uppercase tracking-[0.16em] text-[#d8c7a2]">
             {storyBook.bookTitle}
           </p>
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-h-8 flex-1">
-              {isContextBlock ? (
-                <AnimatedText
-                  key={`${block.id}-top`}
-                  text={block.text}
-                  charsPerSecond={controller.effectiveCharsPerSecond}
-                  className="m-0 text-center text-lg leading-relaxed text-[#f9f1dc] md:text-2xl"
-                  onComplete={controller.onTypingComplete}
-                />
-              ) : (
-                <p className="m-0 text-center text-base text-[#e9dcc1] md:text-xl">
-                  {storyBook.bookTitle} - {controller.currentSceneTitle}
-                </p>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              <Button onClick={() => setHistoryOpen(true)} className="px-3 py-1.5 text-xs">
-                History
-              </Button>
-              <Link
-                className="rounded-full border border-white/15 bg-[var(--app-panel)] px-3 py-1.5 text-xs font-semibold text-[var(--app-fg)] backdrop-blur-md"
-                href="/settings"
+          <div
+            className="px-5"
+            style={{
+              minHeight: styleConfig.layout.narratorBarMinHeightPx,
+              paddingBlock: styleConfig.layout.narratorPaddingY,
+              paddingInline: styleConfig.layout.narratorPaddingX,
+            }}
+          >
+            <p
+              className="m-0 text-[var(--app-accent)]"
+              style={{
+                fontSize: styleConfig.typography.narratorLabel.fontSizePx,
+                fontWeight: styleConfig.typography.narratorLabel.fontWeight,
+                lineHeight: `${styleConfig.typography.narratorLabel.lineHeightPx}px`,
+              }}
+            >
+              Narrador:
+            </p>
+            {isContextBlock ? (
+              <AnimatedText
+                key={`${block.id}-top`}
+                text={block.text}
+                charsPerSecond={controller.effectiveCharsPerSecond}
+                className="m-0 text-[#f9f1dc]"
+                onComplete={controller.onTypingComplete}
+                style={{
+                  fontSize: styleConfig.typography.narratorText.fontSizePx,
+                  fontWeight: styleConfig.typography.narratorText.fontWeight,
+                  lineHeight: `${styleConfig.typography.narratorText.lineHeightPx}px`,
+                }}
+              />
+            ) : (
+              <p
+                className="m-0 text-[#e9dcc1]"
+                style={{
+                  fontSize: styleConfig.typography.narratorText.fontSizePx,
+                  fontWeight: styleConfig.typography.narratorText.fontWeight,
+                  lineHeight: `${styleConfig.typography.narratorText.lineHeightPx}px`,
+                }}
               >
-                Settings
-              </Link>
-            </div>
+                {controller.currentSceneTitle}
+              </p>
+            )}
           </div>
         </section>
 
         {isContextBlock ? (
           <section className="pointer-events-none mt-8 flex flex-1 items-center justify-center">
-            <p className="rounded-md border border-[#c5ab7a]/25 bg-black/35 px-4 py-2 text-sm tracking-wide text-[#f3e6c8] backdrop-blur-sm">
+            <p className="rounded-md bg-black/35 px-4 py-2 text-sm tracking-wide text-[#f3e6c8] backdrop-blur-sm">
               {controller.currentSceneTitle}
             </p>
           </section>
@@ -164,37 +227,54 @@ export function ReaderScreen({ storyBook, initialBlockId }: ReaderScreenProps) {
           />
         )}
 
-        <section className="pointer-events-auto fixed inset-x-0 bottom-5 z-40 mx-auto flex w-[min(1120px,95vw)] items-center justify-between gap-3 rounded-xl border border-[#c5ab7a]/35 bg-black/55 px-3 py-2 shadow-2xl backdrop-blur-md">
-          <Button onClick={() => controller.setAutoplay(!controller.autoplay)}>
+        <section
+          className="pointer-events-auto fixed inset-x-0 bottom-0 z-40 mx-auto flex w-[min(1120px,95vw)] items-center justify-between rounded-t-xl bg-black/55 shadow-2xl backdrop-blur-md"
+          style={{
+            height: styleConfig.layout.bottomHeightPx,
+            paddingBlock: styleConfig.layout.bottomPaddingY,
+            paddingInline: styleConfig.layout.bottomPaddingX,
+            gap: styleConfig.layout.bottomGapPx,
+          }}
+        >
+          <Button
+            onClick={() => controller.setAutoplay(!controller.autoplay)}
+            className="inline-flex items-center gap-2 text-[14px] font-medium leading-5"
+          >
+            {controller.autoplay ? <FiPause size={iconSizeMd} /> : <FiPlay size={iconSizeMd} />}
             {controller.autoplay ? "Autoplay: ligado" : "Autoplay: desligado"}
           </Button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Button
               onClick={controller.previousBlock}
               disabled={!controller.canGoPrevious}
-              className="px-3"
+              className="inline-flex items-center gap-2 px-3 text-[14px] font-medium leading-5"
               aria-label="Bloco anterior"
             >
-              ◀
+              <FiSkipBack size={iconSizeLg} />
             </Button>
             <Button
               onClick={controller.continueFlow}
               disabled={!controller.canContinue}
-              className="px-3"
+              className="inline-flex items-center gap-2 px-3 text-[14px] font-medium leading-5"
               aria-label="Continuar"
             >
-              ▶
+              <FiPlay size={iconSizeLg} />
+              Continuar
             </Button>
             <Button
               onClick={controller.nextBlock}
               disabled={!controller.canGoNext}
-              className="px-3"
+              className="inline-flex items-center gap-2 px-3 text-[14px] font-medium leading-5"
               aria-label="Proximo bloco"
             >
-              ▶▶
+              <FiSkipForward size={iconSizeLg} />
             </Button>
-            <Button onClick={speakCurrentContent} disabled={isAudioLoading}>
+            <Button
+              onClick={speakCurrentContent}
+              disabled={isAudioLoading}
+              className="text-[12px] font-medium leading-4"
+            >
               {isAudioLoading ? "Audio..." : "Voice"}
             </Button>
           </div>

@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
 
 type AnimatedTextProps = {
   text: string;
   charsPerSecond: number;
   className?: string;
+  style?: CSSProperties;
   onComplete?: () => void;
 };
 
@@ -14,6 +16,7 @@ export function AnimatedText({
   text,
   charsPerSecond,
   className,
+  style,
   onComplete,
 }: AnimatedTextProps) {
   const [visibleChars, setVisibleChars] = useState(0);
@@ -47,6 +50,7 @@ export function AnimatedText({
   return (
     <motion.p
       className={className}
+      style={style}
       initial={{ opacity: 0.2 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35 }}

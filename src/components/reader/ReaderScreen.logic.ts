@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   findBlockPositionById,
-  getBookScenes,
   getCurrentBlock,
   type PlaybackStatus,
 } from "@/lib/story/readerEngine";
@@ -12,6 +11,7 @@ import type { ReaderSettings } from "@/lib/config/readerSettings";
 import type { StoryBlock, StoryBook } from "@/lib/story/types";
 
 type ReaderController = {
+  currentChapterTitle: string;
   currentSceneIndex: number;
   currentBlockIndex: number;
   currentBlockId: string;
@@ -29,6 +29,7 @@ type ReaderController = {
   canGoNext: boolean;
   historyEntries: Array<{
     blockId: string;
+    chapterTitle: string;
     sceneTitle: string;
     block: StoryBlock;
   }>;
@@ -51,17 +52,26 @@ export function useReaderScreenController({
   initialBlockId,
   settings,
 }: ReaderControllerParams): ReaderController {
-  const timeline = useMemo(
+  const flatSceneEntries = useMemo(
     () =>
-      getBookScenes(storyBook).flatMap((scene, sceneIndex) =>
-        scene.blocks.map((_, blockIndex) => ({
-          sceneIndex,
-          blockIndex,
+      storyBook.chapters.flatMap((chapter) =>
+        chapter.scenes.map((scene) => ({
+          chapterTitle: chapter.title,
+          scene,
         })),
       ),
     [storyBook],
   );
-  const flatScenes = useMemo(() => getBookScenes(storyBook), [storyBook]);
+  const timeline = useMemo(
+    () =>
+      flatSceneEntries.flatMap((entry, sceneIndex) =>
+        entry.scene.blocks.map((_, blockIndex) => ({
+          sceneIndex,
+          blockIndex,
+        })),
+      ),
+    [flatSceneEntries],
+  );
 
   const initialPosition = useMemo(
     () => findBlockPositionById(storyBook, initialBlockId) ?? timeline[0],
@@ -91,7 +101,8 @@ export function useReaderScreenController({
   const blockStartedAtRef = useRef(0);
 
   const currentPosition = timeline[currentTimelineIndex];
-  const currentScene = flatScenes[currentPosition.sceneIndex];
+  const currentEntry = flatSceneEntries[currentPosition.sceneIndex];
+  const currentScene = currentEntry.scene;
   const currentBlock = getCurrentBlock(currentScene, currentPosition.blockIndex);
 
   useEffect(() => {
@@ -220,18 +231,21 @@ export function useReaderScreenController({
     () =>
       historyIndexes.map((timelineIndex) => {
         const position = timeline[timelineIndex];
-        const scene = flatScenes[position.sceneIndex];
+        const entry = flatSceneEntries[position.sceneIndex];
+        const scene = entry.scene;
         const block = scene.blocks[position.blockIndex];
         return {
           blockId: block.id,
+          chapterTitle: entry.chapterTitle,
           sceneTitle: scene.title,
           block,
         };
       }),
-    [flatScenes, historyIndexes, timeline],
+    [flatSceneEntries, historyIndexes, timeline],
   );
 
   return {
+    currentChapterTitle: currentEntry.chapterTitle,
     currentSceneIndex: currentPosition.sceneIndex,
     currentBlockIndex: currentPosition.blockIndex,
     currentBlockId: currentBlock.id,

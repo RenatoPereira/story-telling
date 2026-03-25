@@ -6,6 +6,7 @@ import type { StoryBlock } from "@/lib/story/types";
 
 export type ReaderHistoryEntry = {
   blockId: string;
+  chapterTitle: string;
   sceneTitle: string;
   block: StoryBlock;
 };
@@ -30,8 +31,8 @@ export function ReaderHistoryModal({
         {entries.map((entry) => {
           const meta =
             entry.block.type === "dialogue"
-              ? `${entry.sceneTitle} - ${entry.block.speaker.characterName}`
-              : `${entry.sceneTitle} - Contexto`;
+              ? `${entry.chapterTitle} / ${entry.sceneTitle} - ${entry.block.speaker.characterName}`
+              : `${entry.chapterTitle} / ${entry.sceneTitle} - Contexto`;
           return (
             <li key={entry.blockId} className="rounded-xl bg-white/8 p-3">
               <p className="text-sm text-[var(--app-muted)]">{meta}</p>

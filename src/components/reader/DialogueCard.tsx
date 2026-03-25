@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 import type { DialogueBlock } from "@/lib/story/types";
 import { AnimatedText } from "@/components/reader/AnimatedText";
+import { styleConfig } from "@/lib/theme/styleConfig";
 
 type DialogueCardProps = {
   block: DialogueBlock;
@@ -16,7 +17,7 @@ export function DialogueCard({
   onTypingComplete,
 }: DialogueCardProps) {
   const panelClassName =
-    "absolute bottom-20 left-1/2 w-[min(94vw,1120px)] -translate-x-1/2 rounded-md border border-[#c5ab7a]/55 bg-black/62 p-3 text-[var(--app-fg)] shadow-2xl backdrop-blur-md";
+    "absolute bottom-20 left-1/2 w-[min(94vw,980px)] -translate-x-1/2 rounded-[8px] bg-black/62 p-0 text-[var(--app-fg)] shadow-2xl backdrop-blur-md";
   const isLeftSpeaker = block.speaker.side === "left";
 
   return (
@@ -57,19 +58,43 @@ export function DialogueCard({
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.25 }}
         className={panelClassName}
+        style={{ borderRadius: styleConfig.layout.dialogueRadiusPx }}
       >
-        <div className="mb-2 inline-flex rounded-sm border border-[#c5ab7a]/65 bg-black/45 px-3 py-1">
-          <p className="m-0 text-xl font-semibold text-[#f6e5be]">
+        <div
+          style={{
+            paddingInline: styleConfig.layout.dialoguePaddingX,
+            paddingTop: styleConfig.layout.dialoguePaddingY,
+          }}
+        >
+          <p
+            className="m-0 text-[#f6e5be]"
+            style={{
+              fontSize: styleConfig.typography.dialogueName.fontSizePx,
+              fontWeight: styleConfig.typography.dialogueName.fontWeight,
+              lineHeight: `${styleConfig.typography.dialogueName.lineHeightPx}px`,
+            }}
+          >
             {block.speaker.characterName}
           </p>
         </div>
-        <div className="rounded-sm border border-[#c5ab7a]/40 bg-black/45 px-3 py-3">
+        <div
+          style={{
+            paddingInline: styleConfig.layout.dialoguePaddingX,
+            paddingBottom: styleConfig.layout.dialoguePaddingY,
+            paddingTop: 8,
+          }}
+        >
           <AnimatedText
             key={block.id}
             text={block.text}
             charsPerSecond={charsPerSecond}
-            className="m-0 text-lg leading-[1.5] text-[#f9f1dc] md:text-3xl"
+            className="m-0 text-[#f9f1dc] [&_em]:italic"
             onComplete={onTypingComplete}
+            style={{
+              fontSize: styleConfig.typography.dialogueText.fontSizePx,
+              fontWeight: styleConfig.typography.dialogueText.fontWeight,
+              lineHeight: `${styleConfig.typography.dialogueText.lineHeightPx}px`,
+            }}
           />
         </div>
       </motion.article>

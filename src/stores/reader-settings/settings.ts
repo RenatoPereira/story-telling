@@ -1,3 +1,5 @@
+"use client";
+
 import {
   colorPalettes,
   defaultColorPalette,
@@ -10,12 +12,13 @@ export type ReaderSettings = {
   contextDelayMultiplier: number;
   autoplay: boolean;
   fontScale: number;
+  ambientAudioEnabled: boolean;
+  ambientAudioVolume: number;
   accessibilityMode: "default" | "high-contrast" | "reduced-motion";
   colorPalette: ColorPaletteId;
 };
 
 export const READER_SETTINGS_STORAGE_KEY = "story-telling.reader.settings";
-export const READER_SETTINGS_EVENT = "reader-settings-updated";
 
 export const defaultReaderSettings: ReaderSettings = {
   textSpeedMultiplier: 1,
@@ -23,6 +26,8 @@ export const defaultReaderSettings: ReaderSettings = {
   contextDelayMultiplier: 1,
   autoplay: true,
   fontScale: 1,
+  ambientAudioEnabled: true,
+  ambientAudioVolume: 0.35,
   accessibilityMode: "default",
   colorPalette: defaultColorPalette,
 };
@@ -33,6 +38,10 @@ function clampMultiplier(value: number): number {
 
 function clampFontScale(value: number): number {
   return Math.min(1.6, Math.max(0.85, value));
+}
+
+function clampAmbientAudioVolume(value: number): number {
+  return Math.min(1, Math.max(0, value));
 }
 
 export function sanitizeReaderSettings(
@@ -57,6 +66,11 @@ export function sanitizeReaderSettings(
     ),
     autoplay: value.autoplay ?? defaultReaderSettings.autoplay,
     fontScale: clampFontScale(value.fontScale ?? defaultReaderSettings.fontScale),
+    ambientAudioEnabled:
+      value.ambientAudioEnabled ?? defaultReaderSettings.ambientAudioEnabled,
+    ambientAudioVolume: clampAmbientAudioVolume(
+      value.ambientAudioVolume ?? defaultReaderSettings.ambientAudioVolume,
+    ),
     accessibilityMode: allowedAccessibilityModes.has(
       value.accessibilityMode ?? "default",
     )
@@ -66,39 +80,4 @@ export function sanitizeReaderSettings(
       ? (value.colorPalette as ColorPaletteId)
       : defaultReaderSettings.colorPalette,
   };
-}
-
-export function loadReaderSettings(): ReaderSettings {
-  if (typeof window === "undefined") {
-    return defaultReaderSettings;
-  }
-
-  const rawValue = window.localStorage.getItem(READER_SETTINGS_STORAGE_KEY);
-  if (!rawValue) {
-    return defaultReaderSettings;
-  }
-
-  try {
-    const parsed = JSON.parse(rawValue) as Partial<ReaderSettings>;
-    return sanitizeReaderSettings(parsed);
-  } catch {
-    return defaultReaderSettings;
-  }
-}
-
-export function saveReaderSettings(nextSettings: ReaderSettings): void {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  const safeSettings = sanitizeReaderSettings(nextSettings);
-  window.localStorage.setItem(
-    READER_SETTINGS_STORAGE_KEY,
-    JSON.stringify(safeSettings),
-  );
-  window.dispatchEvent(
-    new CustomEvent<ReaderSettings>(READER_SETTINGS_EVENT, {
-      detail: safeSettings,
-    }),
-  );
 }

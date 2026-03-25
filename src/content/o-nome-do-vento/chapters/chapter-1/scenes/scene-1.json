@@ -1,0 +1,82 @@
+{
+  "id": "scene-1",
+  "title": "Um silêncio de três partes",
+  "backgroundImage": "/assets/backgrounds/prologo-background.png",
+  "audio": {
+    "enabled": true,
+    "defaultVoice": "alloy",
+    "ambientTrack": "/assets/audio/prologo-silencio.mp3"
+  },
+  "blocks": [
+    {
+      "id": "scene-1-context-1",
+      "type": "context",
+      "text": "Noite outra vez. A Pousada Marco do Percurso estava em silêncio, e era um silêncio em três partes.",
+      "minDurationMs": 1700,
+      "charsPerSecond": 34
+    },
+    {
+      "id": "scene-1-context-2",
+      "type": "context",
+      "text": "A parte mais óbvia era uma quietude oca e repleta de ecos, feita das coisas que faltavam. Se houvesse vento, ele sussurraria por entre as árvores, faria a pousada ranger em suas juntas e sopraria o silêncio estrada afora, como folhas de outono arrastadas.",
+      "minDurationMs": 2400,
+      "charsPerSecond": 33
+    },
+    {
+      "id": "scene-1-context-3",
+      "type": "context",
+      "text": "Se houvesse uma multidão, ou pelo menos um punhado de homens na pousada, eles encheriam o silêncio de conversa e riso, do burburinho e do clamor esperados de uma casa em que se bebe nas horas sombrias da noite. Se houvesse música... Mas não, é claro que não havia música.",
+      "minDurationMs": 2500,
+      "charsPerSecond": 33
+    },
+    {
+      "id": "scene-1-context-4",
+      "type": "context",
+      "text": "Na verdade, não havia nenhuma dessas coisas e por isso o silêncio persistia.",
+      "minDurationMs": 1500,
+      "charsPerSecond": 34
+    },
+    {
+      "id": "scene-1-context-5",
+      "type": "context",
+      "text": "Dentro da pousada, uma dupla de homens se encolhia num canto do bar. Os dois bebiam com serena determinação, evitando discussões sérias ou notícias inquietantes.",
+      "minDurationMs": 2000,
+      "charsPerSecond": 33
+    },
+    {
+      "id": "scene-1-context-6",
+      "type": "context",
+      "text": "Com isso, acrescentavam um silêncio pequeno e soturno ao maior e mais oco. Ele formava uma espécie de amálgama, um contraponto.",
+      "minDurationMs": 1800,
+      "charsPerSecond": 33
+    },
+    {
+      "id": "scene-1-context-7",
+      "type": "context",
+      "text": "O terceiro silêncio não era fácil de notar. Se você passasse uma hora escutando, talvez começasse a senti-lo no assoalho de madeira sob os pés e nos barris toscos e lascados atrás do bar.",
+      "minDurationMs": 2100,
+      "charsPerSecond": 32
+    },
+    {
+      "id": "scene-1-context-8",
+      "type": "context",
+      "text": "Ele estava no peso da lareira de pedras negras, que conservava o calor de um fogo há muito extinto. Estava no lento vaivém de uma toalha de linho branco esfregada nos veios da madeira do bar. E estava nas mãos do homem ali postado, que polia um pedaço de mogno já reluzente à luz do lampião.",
+      "minDurationMs": 2700,
+      "charsPerSecond": 32
+    },
+    {
+      "id": "scene-1-context-9",
+      "type": "context",
+      "text": "O homem tinha cabelos ruivos de verdade, vermelhos como a chama. Seus olhos eram escuros e distantes, e ele se movia com a segurança sutil de quem conhece muitas coisas.",
+      "minDurationMs": 2000,
+      "charsPerSecond": 33
+    },
+    {
+      "id": "scene-1-context-10",
+      "type": "context",
+      "text": "Dele era a Pousada Marco do Percurso, como dele era também o terceiro silêncio. Era apropriado que assim fosse, pois esse era o maior silêncio dos três, englobando os outros dentro de si. Era profundo e amplo como o fim do outono. Pesado como um pedregulho alisado pelo rio. Era o som paciente - som de flor colhida - do homem que espera a morte.",
+      "minDurationMs": 2900,
+      "charsPerSecond": 31
+    }
+  ]
+}

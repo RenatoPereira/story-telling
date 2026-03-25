@@ -2,6 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { Button } from "@/design-system/atoms/button/Button";
+import styles from "./Modal.module.css";
 
 type ModalProps = PropsWithChildren<{
   open: boolean;
@@ -15,11 +16,13 @@ export function Modal({ open, onClose, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-6"
+      className={`${styles.overlay} fixed inset-0 z-[90] flex items-center justify-center p-6`}
       role="dialog"
       aria-modal="true"
     >
-      <div className="max-h-[82vh] w-[min(92vw,780px)] overflow-auto rounded-2xl bg-[var(--app-panel-strong)] p-4 text-[var(--app-fg)] shadow-2xl backdrop-blur-md">
+      <div
+        className={`${styles.panel} max-h-[82vh] w-[min(92vw,780px)] overflow-auto rounded-2xl p-4 shadow-2xl backdrop-blur-md`}
+      >
         <Button onClick={onClose} className="mb-3">
           Fechar
         </Button>

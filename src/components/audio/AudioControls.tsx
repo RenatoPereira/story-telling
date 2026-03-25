@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "./AudioControls.module.css";
+
 type AudioControlsProps = {
   disabled?: boolean;
   loading?: boolean;
@@ -16,7 +18,7 @@ export function AudioControls({
       type="button"
       onClick={onSpeak}
       disabled={disabled || loading}
-      className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-60"
+      className={`${styles.button} rounded-full border px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60`}
     >
       {loading ? "Gerando audio..." : "Ouvir narracao"}
     </button>

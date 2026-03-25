@@ -1,0 +1,9 @@
+{
+  "id": "garoto-rannish",
+  "name": "Garoto",
+  "defaultPortraitImage": "/assets/characters/cronista-neutral.svg",
+  "portraits": {
+    "neutral": "/assets/characters/cronista-neutral.svg",
+    "atento": "/assets/characters/cronista-neutral.svg"
+  }
+}

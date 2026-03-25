@@ -1,0 +1,40 @@
+{
+  "id": "scene-5",
+  "title": "Estradas ruins",
+  "backgroundImage": "/assets/backgrounds/estalagem.svg",
+  "audio": {
+    "enabled": true,
+    "defaultVoice": "alloy",
+    "ambientTrack": "/assets/audio/cap1-estradas.mp3"
+  },
+  "blocks": [
+    {
+      "id": "scene-5-context-1",
+      "type": "context",
+      "text": "Como Kote previra, eles voltaram na noite seguinte para jantar e beber. Houve tentativas frouxas de contar histórias, mas o clima não ajudava. A conversa se voltou para assuntos de maior peso: o Rei Penitente, rebeldes em Resavek, medo de terceira arrecadação de impostos e uma colheita que talvez não bastasse para todas as famílias.",
+      "minDurationMs": 3800,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-5-context-2",
+      "type": "context",
+      "text": "As estradas estavam cheias de desertores e oportunistas; até viagens curtas pareciam arriscadas. O último mercador cobrara preços absurdos por sal e açúcar, não tinha especiarias e pedia dois talentos de prata por uma pequena saca de café. Todos haviam rido, praguejado e ido embora, mas agora reviravam a bolsa desejando ter comprado alguma coisa antes da neve.",
+      "minDurationMs": 4300,
+      "charsPerSecond": 29
+    },
+    {
+      "id": "scene-5-context-3",
+      "type": "context",
+      "text": "Nenhum deles falou diretamente da coisa que tinham queimado e enterrado. A cidade comentava com meio ceticismo e meio medo. Ali se contavam histórias, mas elas sempre aconteciam noutros lugares; ali não era lugar para demônios. Mesmo assim, cada um dos seis amigos comprou do ferreiro um pedaço de ferro batido tão pesado quanto conseguia manejar.",
+      "minDurationMs": 4000,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-5-context-4",
+      "type": "context",
+      "text": "Ninguém disse o que de fato pensava. Falaram de mercadores, desertores, impostos e falta de sal para atravessar o inverno. Lembraram que, três anos antes, ninguém trancava portas à noite. A conversa seguiu em tom decrescente e terminou com tristeza. Do jeito que os tempos andavam, a maioria das noites acabava assim.",
+      "minDurationMs": 3500,
+      "charsPerSecond": 30
+    }
+  ]
+}

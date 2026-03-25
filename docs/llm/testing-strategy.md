@@ -19,3 +19,7 @@
 - Scene navigation does not break text rendering.
 - Dialogue controls remain bounded and stable.
 - Audio controls show loading and handle failure.
+
+## Local Commit Validation
+- Before a commit is accepted, run `npx lint-staged` and `npm run build` through the pre-commit hook.
+- Treat a failing build as a blocker and fix type/runtime issues before pushing.

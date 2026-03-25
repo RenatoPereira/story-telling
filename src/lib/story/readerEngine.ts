@@ -1,4 +1,10 @@
-import type { StoryBlock, StoryBook, StoryScene } from "@/lib/story/types";
+import {
+  resolveCharacterName,
+  type StoryBlock,
+  type StoryBook,
+  type StoryCharacters,
+  type StoryScene,
+} from "@/lib/story/types";
 
 export function clampSceneIndex(index: number, scenesLength: number): number {
   if (scenesLength <= 0) {
@@ -43,11 +49,14 @@ export function getCurrentBlock(
   return scene.blocks[blockIndex];
 }
 
-export function buildSceneSpeechText(scene: StoryScene): string {
+export function buildSceneSpeechText(
+  scene: StoryScene,
+  characters: StoryCharacters = {},
+): string {
   return scene.blocks
     .map((block) =>
       block.type === "dialogue"
-        ? `${block.speaker.characterName}: ${block.text}`
+        ? `${resolveCharacterName(characters, block.speaker.characterId)}: ${block.text}`
         : block.text,
     )
     .join("\n\n");

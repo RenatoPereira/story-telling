@@ -3,12 +3,18 @@ export type VoiceProfile = {
   voice: string;
 };
 
-export type DialogueSpeaker = {
+export type StoryCharacter = {
+  name: string;
+  defaultPortraitImage: string;
+  portraits: Record<string, string>;
+};
+
+export type StoryCharacters = Record<string, StoryCharacter>;
+
+export type DialogueParticipant = {
   characterId: string;
-  characterName: string;
-  emotion: string;
   side: "left" | "right";
-  portraitImage: string;
+  imageKey?: string;
 };
 
 export type StoryBlockBase = {
@@ -24,9 +30,10 @@ export type ContextBlock = StoryBlockBase & {
 
 export type DialogueBlock = StoryBlockBase & {
   type: "dialogue";
-  speaker: DialogueSpeaker;
+  speaker: DialogueParticipant;
   text: string;
   voiceProfile?: VoiceProfile;
+  listeners?: DialogueParticipant[];
 };
 
 export type StoryBlock = ContextBlock | DialogueBlock;
@@ -34,6 +41,7 @@ export type StoryBlock = ContextBlock | DialogueBlock;
 export type SceneAudio = {
   enabled: boolean;
   defaultVoice: string;
+  ambientTrack: string;
 };
 
 export type StoryScene = {
@@ -53,5 +61,29 @@ export type StoryChapter = {
 export type StoryBook = {
   bookId: string;
   bookTitle: string;
+  characters: StoryCharacters;
   chapters: StoryChapter[];
 };
+
+const FALLBACK_CHARACTER_IMAGE = "/assets/characters/cronista-neutral.svg";
+
+export function resolveCharacterName(
+  characters: StoryCharacters,
+  characterId: string,
+): string {
+  return characters[characterId]?.name ?? characterId;
+}
+
+export function resolveCharacterPortrait(
+  characters: StoryCharacters,
+  participant: Pick<DialogueParticipant, "characterId" | "imageKey">,
+): string {
+  const character = characters[participant.characterId];
+  if (!character) {
+    return FALLBACK_CHARACTER_IMAGE;
+  }
+  if (participant.imageKey && character.portraits[participant.imageKey]) {
+    return character.portraits[participant.imageKey];
+  }
+  return character.defaultPortraitImage;
+}

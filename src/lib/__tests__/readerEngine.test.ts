@@ -7,13 +7,27 @@ import {
   getCurrentBlock,
   resolveNextStatus,
 } from "@/lib/story/readerEngine";
-import type { StoryScene } from "@/lib/story/types";
+import type { StoryCharacters, StoryScene } from "@/lib/story/types";
+
+const charactersFixture: StoryCharacters = {
+  kvothe: {
+    name: "Kvothe",
+    defaultPortraitImage: "/assets/characters/kvothe-neutral.svg",
+    portraits: {
+      neutral: "/assets/characters/kvothe-neutral.svg",
+    },
+  },
+};
 
 const sceneFixture: StoryScene = {
   id: "scene-test",
   title: "Cena teste",
   backgroundImage: "/assets/backgrounds/test.svg",
-  audio: { enabled: true, defaultVoice: "alloy" },
+  audio: {
+    enabled: true,
+    defaultVoice: "alloy",
+    ambientTrack: "/assets/audio/scene-test.mp3",
+  },
   blocks: [
     {
       id: "context-1",
@@ -30,10 +44,8 @@ const sceneFixture: StoryScene = {
       charsPerSecond: 34,
       speaker: {
         characterId: "kvothe",
-        characterName: "Kvothe",
-        emotion: "neutral",
         side: "left",
-        portraitImage: "/assets/characters/kvothe-neutral.svg",
+        imageKey: "neutral",
       },
       voiceProfile: { provider: "openai", voice: "alloy" },
     },
@@ -55,7 +67,7 @@ describe("readerEngine", () => {
   });
 
   it("builds speech text with context and dialogue blocks", () => {
-    const speech = buildSceneSpeechText(sceneFixture);
+    const speech = buildSceneSpeechText(sceneFixture, charactersFixture);
     expect(speech).toContain("Narracao inicial.");
     expect(speech).toContain("Kvothe: Primeira fala");
   });

@@ -1,0 +1,6 @@
+{
+  "bookId": "o-nome-do-vento",
+  "bookTitle": "O Nome do Vento",
+  "characterIds": ["kote", "bast", "cob", "garoto-rannish"],
+  "chapterIds": ["chapter-1", "chapter-2"]
+}

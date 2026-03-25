@@ -1,12 +1,21 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { ReaderScreen } from "@/components/reader/ReaderScreen";
+import { ReaderScreen } from "@/screens/reader/ReaderScreen";
 import type { StoryBook } from "@/lib/story/types";
 
 const storyFixture: StoryBook = {
   bookId: "book-1",
   bookTitle: "Livro teste",
+  characters: {
+    kvothe: {
+      name: "Kvothe",
+      defaultPortraitImage: "/assets/characters/kvothe-neutral.svg",
+      portraits: {
+        neutral: "/assets/characters/kvothe-neutral.svg",
+      },
+    },
+  },
   chapters: [
     {
       id: "chapter-1",
@@ -16,7 +25,11 @@ const storyFixture: StoryBook = {
           id: "scene-1",
           title: "Cena 1",
           backgroundImage: "/assets/backgrounds/estalagem.svg",
-          audio: { enabled: true, defaultVoice: "alloy" },
+          audio: {
+            enabled: true,
+            defaultVoice: "alloy",
+            ambientTrack: "/assets/audio/scene-1-ambient.mp3",
+          },
           blocks: [
             {
               id: "block-context-1",
@@ -33,10 +46,8 @@ const storyFixture: StoryBook = {
               charsPerSecond: 80,
               speaker: {
                 characterId: "kvothe",
-                characterName: "Kvothe",
-                emotion: "neutral",
                 side: "left",
-                portraitImage: "/assets/characters/kvothe-neutral.svg",
+                imageKey: "neutral",
               },
               voiceProfile: { provider: "openai", voice: "alloy" },
             },
@@ -52,9 +63,13 @@ describe("ReaderScreen", () => {
     render(<ReaderScreen storyBook={storyFixture} />);
 
     expect(screen.getByText("Livro teste")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Autoplay: ligado" })).toBeVisible();
+    const autoplayToggle = screen.getByRole("button", { name: "Alternar autoplay" });
+    expect(autoplayToggle).toHaveAttribute("aria-pressed", "true");
 
-    fireEvent.click(screen.getByRole("button", { name: "Autoplay: ligado" }));
-    expect(screen.getByRole("button", { name: "Autoplay: desligado" })).toBeVisible();
+    fireEvent.click(autoplayToggle);
+    expect(screen.getByRole("button", { name: "Alternar autoplay" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
   });
 });

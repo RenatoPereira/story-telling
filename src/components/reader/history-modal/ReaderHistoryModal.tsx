@@ -2,7 +2,12 @@
 
 import { Modal } from "@/design-system/atoms/modal/Modal";
 import { Button } from "@/design-system/atoms/button/Button";
-import type { StoryBlock } from "@/lib/story/types";
+import {
+  resolveCharacterName,
+  type StoryBlock,
+  type StoryCharacters,
+} from "@/lib/story/types";
+import styles from "./ReaderHistoryModal.module.css";
 
 export type ReaderHistoryEntry = {
   blockId: string;
@@ -13,6 +18,7 @@ export type ReaderHistoryEntry = {
 
 type ReaderHistoryModalProps = {
   open: boolean;
+  characters: StoryCharacters;
   entries: ReaderHistoryEntry[];
   onClose: () => void;
   onOpenBlock: (blockId: string) => void;
@@ -20,6 +26,7 @@ type ReaderHistoryModalProps = {
 
 export function ReaderHistoryModal({
   open,
+  characters,
   entries,
   onClose,
   onOpenBlock,
@@ -31,11 +38,14 @@ export function ReaderHistoryModal({
         {entries.map((entry) => {
           const meta =
             entry.block.type === "dialogue"
-              ? `${entry.chapterTitle} / ${entry.sceneTitle} - ${entry.block.speaker.characterName}`
+              ? `${entry.chapterTitle} / ${entry.sceneTitle} - ${resolveCharacterName(
+                  characters,
+                  entry.block.speaker.characterId,
+                )}`
               : `${entry.chapterTitle} / ${entry.sceneTitle} - Contexto`;
           return (
-            <li key={entry.blockId} className="rounded-xl bg-white/8 p-3">
-              <p className="text-sm text-[var(--app-muted)]">{meta}</p>
+            <li key={entry.blockId} className={`${styles.entryItem} rounded-xl p-3`}>
+              <p className={`${styles.entryMeta} text-sm`}>{meta}</p>
               <p className="mt-1 text-[0.97rem] leading-relaxed">{entry.block.text}</p>
               <Button onClick={() => onOpenBlock(entry.blockId)}>Abrir bloco</Button>
             </li>

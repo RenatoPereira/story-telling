@@ -1,0 +1,102 @@
+{
+  "id": "scene-2",
+  "title": "Um lugar para demônios",
+  "backgroundImage": "/assets/backgrounds/prologo-background.png",
+  "audio": {
+    "enabled": true,
+    "defaultVoice": "alloy",
+    "ambientTrack": "/assets/audio/cap1-demons.mp3"
+  },
+  "blocks": [
+    {
+      "id": "scene-2-context-1",
+      "type": "context",
+      "text": "Era noite de caedes e o grupo de praxe se reunia na Pousada Marco do Percurso. Cinco pessoas não chegavam a ser propriamente uma grande aglomeração, mas eram tudo o que a hospedaria andava recebendo nos últimos tempos, dada a situação vigente. O velho Cob cumpria seu papel de contador de histórias e distribuidor de conselhos. Os homens no bar bebericavam e escutavam. No quarto dos fundos, um jovem hospedeiro se postava fora da visão deles, atrás da porta, sorrindo ao ouvir os detalhes de uma história familiar.",
+      "minDurationMs": 3400,
+      "charsPerSecond": 31
+    },
+    {
+      "id": "scene-2-context-2",
+      "type": "dialogue",
+      "text": "Quando acordou, o Grande Taborlin descobriu-se trancado numa torre alta. Tinham levado sua espada e tirado suas ferramentas: chave, moeda e vela, tudo se fora. Mas isso não era o pior, vocês sabem... porque as lamparinas da parede emitiam uma chama azul!",
+      "minDurationMs": 3300,
+      "charsPerSecond": 31,
+      "speaker": {
+        "characterId": "cob",
+        "side": "left",
+        "imageKey": "narrando"
+      },
+      "listeners": [
+        {
+          "characterId": "garoto-rannish",
+          "side": "right",
+          "imageKey": "atento"
+        }
+      ]
+    },
+    {
+      "id": "scene-2-context-3",
+      "type": "dialogue",
+      "text": "O Chandriano.",
+      "minDurationMs": 3400,
+      "charsPerSecond": 31,
+      "speaker": {
+        "characterId": "garoto-rannish",
+        "side": "right",
+        "imageKey": "atento"
+      },
+      "listeners": [
+        {
+          "characterId": "cob",
+          "side": "left",
+          "imageKey": "narrando"
+        }
+      ]
+    },
+    {
+      "id": "scene-2-context-4",
+      "type": "context",
+      "text": "― Mas como foi que eles o acharam? ― interrompeu o garoto. ― E por que não o mataram quando tiveram chance? Jake ralhou, Graham tentou apaziguar, e o barulho do caneco vazio no mogno encerrou a discussão. O hospedeiro apareceu com cinco tigelas de ensopado e duas broas quentinhas, serviu mais cerveja a Jake, Shep e ao velho Cob, movimentando-se com um ar eficiente e atarefado.",
+      "minDurationMs": 3500,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-2-context-5",
+      "type": "context",
+      "text": "Com a comida terminada, Cob retomou a história: a cela não tinha porta nem janela, só pedra lisa e dura. Mas Taborlin sabia os nomes de todas as coisas. Ele disse à pedra: 'Quebre!', e a pedra se quebrou. A parede se rasgou feito papel, ele viu o céu, respirou o ar de primavera e deu um passo no ar. O garoto se espantou. Cob prosseguiu: Taborlin falou com o vento, e o vento o aninhou e afagou, levando-o ao chão com a suavidade de um sopro na lanugem de um cardo.",
+      "minDurationMs": 4200,
+      "charsPerSecond": 30
+    },
+    {
+      "id": "scene-2-context-6",
+      "type": "dialogue",
+      "text": "Dívida de latoeiro é sempre quitada: Se é negócio simples, uma vez por cada; Duas pela ajuda, se de graça é dada, E três há de pagar a ofensa praticada.",
+      "minDurationMs": 4200,
+      "charsPerSecond": 30,
+      "speaker": {
+        "characterId": "kote",
+        "side": "left",
+        "imageKey": "preciso"
+      },
+      "listeners": [
+        {
+          "characterId": "cob",
+          "side": "right",
+          "imageKey": "narrando"
+        },
+        {
+          "characterId": "garoto-rannish",
+          "side": "right",
+          "imageKey": "atento"
+        }
+      ]
+    },
+    {
+      "id": "scene-2-context-7",
+      "type": "context",
+      "text": "Cob pigarreou e continuou: o amuleto protegia Taborlin de coisas maléficas. Shep disse que daria bom dinheiro por um desses. O garoto retomou a dúvida sobre o Chandriano, Jake retrucou com firmeza e Cob cortou sua intervenção com rispidez. A discussão descambou para altercações sobre sinais do Chandriano e poderes do amuleto. As coisas iam ficando quentes quando a porta da entrada se abriu de chofre.",
+      "minDurationMs": 3900,
+      "charsPerSecond": 30
+    }
+  ]
+}

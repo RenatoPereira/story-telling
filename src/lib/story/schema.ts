@@ -5,12 +5,16 @@ export const voiceProfileSchema = z.object({
   voice: z.string().min(1),
 });
 
-export const dialogueSpeakerSchema = z.object({
+export const storyCharacterSchema = z.object({
+  name: z.string().min(1),
+  defaultPortraitImage: z.string().min(1),
+  portraits: z.record(z.string().min(1), z.string().min(1)),
+});
+
+export const dialogueParticipantSchema = z.object({
   characterId: z.string().min(1),
-  characterName: z.string().min(1),
-  emotion: z.string().min(1),
   side: z.enum(["left", "right"]),
-  portraitImage: z.string().min(1),
+  imageKey: z.string().min(1).optional(),
 });
 
 export const contextBlockSchema = z.object({
@@ -27,7 +31,8 @@ export const dialogueBlockSchema = z.object({
   text: z.string().min(1),
   minDurationMs: z.number().int().positive(),
   charsPerSecond: z.number().int().positive(),
-  speaker: dialogueSpeakerSchema,
+  speaker: dialogueParticipantSchema,
+  listeners: z.array(dialogueParticipantSchema).optional(),
   voiceProfile: voiceProfileSchema.optional(),
 });
 
@@ -43,6 +48,7 @@ export const storySceneSchema = z.object({
   audio: z.object({
     enabled: z.boolean(),
     defaultVoice: z.string().min(1),
+    ambientTrack: z.string().min(1),
   }),
   blocks: z.array(storyBlockSchema).min(1),
 });
@@ -57,10 +63,16 @@ export const storyBookSchema = z
   .object({
     bookId: z.string().min(1),
     bookTitle: z.string().min(1),
+    characters: z
+      .record(z.string().min(1), storyCharacterSchema)
+      .refine((value) => Object.keys(value).length > 0, {
+        message: "E necessario informar ao menos um personagem.",
+      }),
     chapters: z.array(storyChapterSchema).min(1),
   })
   .superRefine((value, ctx) => {
     const ids = new Set<string>();
+    const characterIds = new Set(Object.keys(value.characters));
     for (const chapter of value.chapters) {
       for (const scene of chapter.scenes) {
         for (const block of scene.blocks) {
@@ -72,6 +84,25 @@ export const storyBookSchema = z
             return;
           }
           ids.add(block.id);
+
+          if (block.type === "dialogue") {
+            if (!characterIds.has(block.speaker.characterId)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `Personagem inexistente no speaker: ${block.speaker.characterId}`,
+              });
+              return;
+            }
+            for (const listener of block.listeners ?? []) {
+              if (!characterIds.has(listener.characterId)) {
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: `Personagem inexistente no listener: ${listener.characterId}`,
+                });
+                return;
+              }
+            }
+          }
         }
       }
     }

@@ -1,0 +1,13 @@
+{
+  "id": "kote",
+  "name": "Kote",
+  "defaultPortraitImage": "/assets/characters/kvothe-neutral.png",
+  "portraits": {
+    "neutral": "/assets/characters/kvothe-neutral.png",
+    "preciso": "/assets/characters/kvothe-neutral.png",
+    "contido": "/assets/characters/kvothe.svg",
+    "serio": "/assets/characters/kvothe.svg",
+    "calmo": "/assets/characters/kvothe-neutral.svg",
+    "firme": "/assets/characters/kvothe.svg"
+  }
+}

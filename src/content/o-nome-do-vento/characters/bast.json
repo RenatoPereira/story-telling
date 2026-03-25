@@ -1,0 +1,11 @@
+{
+  "id": "bast",
+  "name": "Bast",
+  "defaultPortraitImage": "/assets/characters/bast-neutral.png",
+  "portraits": {
+    "neutral": "/assets/characters/bast-neutral.png",
+    "curioso": "/assets/characters/bast-neutral.png",
+    "alarmado": "/assets/characters/bast.svg",
+    "leal": "/assets/characters/bast.svg"
+  }
+}

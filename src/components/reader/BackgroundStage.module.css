@@ -1,8 +1,8 @@
 .overlay {
   background: linear-gradient(
     to bottom,
-    rgb(0 0 0 / 15%),
-    rgb(0 0 0 / 25%),
-    rgb(0 0 0 / 45%)
+    color-mix(in srgb, var(--app-overlay) 42%, transparent),
+    color-mix(in srgb, var(--app-overlay) 70%, transparent),
+    color-mix(in srgb, var(--app-overlay) 95%, transparent)
   );
 }

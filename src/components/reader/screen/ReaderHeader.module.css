@@ -6,25 +6,25 @@
 .headerGradient {
   background: linear-gradient(
     to bottom,
-    rgb(255 255 255 / 15%),
-    rgb(255 255 255 / 5%),
+    color-mix(in srgb, var(--app-fg) 14%, transparent),
+    color-mix(in srgb, var(--app-fg) 5%, transparent),
     transparent
   );
 }
 
 .headerButton {
   border: 0;
-  background-color: rgb(0 0 0 / 40%);
+  background-color: color-mix(in srgb, var(--app-overlay) 78%, transparent);
   color: var(--app-fg);
 }
 
 .headerButton:hover {
-  background-color: rgb(0 0 0 / 55%);
+  background-color: color-mix(in srgb, var(--app-overlay) 92%, transparent);
 }
 
 .chapterTitle {
   font-size: var(--reader-font-chapter-title-size);
   line-height: var(--reader-font-chapter-title-line-height);
   font-weight: var(--reader-font-chapter-title-weight);
-  color: #f6e7c5;
+  color: var(--app-accent);
 }

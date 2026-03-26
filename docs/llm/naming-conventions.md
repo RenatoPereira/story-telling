@@ -16,6 +16,7 @@
 - Preferred folder format: `component-name/ComponentName.tsx`
 - Screen files: `src/screens/<screen-name>/ScreenName.tsx`, `ScreenName.hooks.ts`, and `ScreenName.logic.ts`
 - Baseline structure for screens/components: presentation file + style file + hooks file
+- Context hook files: `src/screens/<screen-name>/hooks/use<Context>.ts` (example: `useReaderSpeech.ts`)
 
 ## Story Content JSON
 - Keys: `camelCase`

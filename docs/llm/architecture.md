@@ -23,6 +23,7 @@
 - `src/design-system/atoms/*`: shared UI primitives (atomic design base)
 - `src/app/api/tts/route.ts`: TTS provider integration
 - `src/screens/<screen-name>/<ScreenName>.hooks.ts`: UI orchestration hooks and side effects
+- `src/screens/<screen-name>/hooks/use*.ts`: context-scoped hooks (navigation, audio, sync, etc.)
 
 ## Data Flow
 1. Compose story data from `book.json`, character files, chapter files, and scene files.
@@ -39,4 +40,5 @@
 - Keep domain logic in pure functions when possible.
 - Keep rendering components focused on display concerns.
 - Keep screen/component side effects in dedicated `*.hooks.ts` files.
+- Split large hook files by context under `hooks/` and keep `ScreenName.hooks.ts` as an export barrel.
 - Never trust raw JSON without schema validation.

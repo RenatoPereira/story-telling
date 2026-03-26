@@ -22,6 +22,7 @@
 - Keep orchestration and side effects in hook files, not directly in JSX trees.
 - Presentation files (`ComponentName.tsx` / `ScreenName.tsx`) should focus on render composition and event wiring only.
 - All new screens and components must follow the trio: presentation file + style file + hooks file.
+- When hooks grow by responsibility, split them by context in `hooks/use*.ts` and re-export from `ComponentName.hooks.ts` or `ScreenName.hooks.ts`.
 - Keep global client state in `src/stores/<domain>/` (Zustand), not inside view components.
 - Avoid CSS Modules and keep styling in Tailwind for consistency.
 

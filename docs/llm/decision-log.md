@@ -29,3 +29,9 @@
 - Decision: Move screen files to `src/screens/<screen-name>/` and define this as an architecture rule.
 - Impact: Clearer separation between route orchestration and reusable component building blocks.
 - Rollback: Revert imports and move screens back to feature folders in `components` if this layer adds unnecessary complexity.
+
+## 2026-03-25 - Presentation and hooks split
+- Context: `ReaderScreen.tsx` concentrated render tree, browser effects, keyboard handlers, and audio orchestration in one file.
+- Decision: Enforce structure with presentation file + style file + hooks file (`*.hooks.ts`) for screens and components.
+- Impact: Cleaner presentation files, easier isolated testing for side effects, and reusable hook-level orchestration.
+- Rollback: Collapse hook files back into presentation modules if indirection starts to slow simple feature changes.

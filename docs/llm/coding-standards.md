@@ -14,11 +14,15 @@
 ## Separation Of Concerns
 - Every feature must live in its own folder to improve decoupling:
   - `feature-name/ComponentName.tsx` (structure)
-  - `feature-name/ComponentName.logic.ts` (logic)
+  - `feature-name/ComponentName.hooks.ts` (hooks and side effects)
+  - `feature-name/ComponentName.logic.ts` (domain/controller logic when needed)
   - styles should be composed with Tailwind utility classes directly in JSX
 - Screen-level files must live in `src/screens/<screen-name>/` and must not be created under `src/components/`.
 - Avoid flat component files directly under `components/` for new work.
-- Keep orchestration and state transitions in logic files, not directly in JSX trees.
+- Keep orchestration and side effects in hook files, not directly in JSX trees.
+- Presentation files (`ComponentName.tsx` / `ScreenName.tsx`) should focus on render composition and event wiring only.
+- All new screens and components must follow the trio: presentation file + style file + hooks file.
+- When hooks grow by responsibility, split them by context in `hooks/use*.ts` and re-export from `ComponentName.hooks.ts` or `ScreenName.hooks.ts`.
 - Keep global client state in `src/stores/<domain>/` (Zustand), not inside view components.
 - Avoid CSS Modules and keep styling in Tailwind for consistency.
 

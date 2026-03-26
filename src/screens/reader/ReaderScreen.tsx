@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { BackgroundStage } from "@/components/reader/BackgroundStage";
@@ -13,6 +13,12 @@ import {
   updateReaderSettings,
   useReaderSettings,
 } from "@/stores/reader-settings";
+import {
+  useAmbientSceneAudio,
+  useReaderKeyboardNavigation,
+  useReaderSpeech,
+  useSyncBlockIdWithUrl,
+} from "@/screens/reader/ReaderScreen.hooks";
 import { useReaderScreenController } from "@/screens/reader/ReaderScreen.logic";
 import styles from "./ReaderScreen.module.css";
 
@@ -26,11 +32,7 @@ export function ReaderScreen({ storyBook, initialBlockId }: ReaderScreenProps) {
   const pathname = usePathname();
   const settings = useReaderSettings();
 
-  const [isAudioLoading, setIsAudioLoading] = useState(false);
-  const [audioError, setAudioError] = useState<string | null>(null);
-  const [ambientAudioError, setAmbientAudioError] = useState<string | null>(null);
   const [historyOpen, setHistoryOpen] = useState(false);
-  const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const controller = useReaderScreenController({
     storyBook,
@@ -43,136 +45,26 @@ export function ReaderScreen({ storyBook, initialBlockId }: ReaderScreenProps) {
   const nextBlock = controller.nextBlock;
   const previousBlock = controller.previousBlock;
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    params.set("blockId", controller.currentBlockId);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [controller.currentBlockId, pathname, router]);
+  useSyncBlockIdWithUrl(controller.currentBlockId, pathname, router.replace);
 
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.target instanceof HTMLElement) {
-        const tag = event.target.tagName.toLowerCase();
-        if (tag === "input" || tag === "textarea") {
-          return;
-        }
-      }
+  useReaderKeyboardNavigation({
+    canContinue,
+    continueFlow,
+    nextBlock,
+    previousBlock,
+  });
 
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        nextBlock();
-      }
+  const { ambientAudioError } = useAmbientSceneAudio({
+    ambientTrack: controller.currentAmbientTrack,
+    isSceneAudioEnabled: controller.isCurrentSceneAudioEnabled,
+    ambientAudioEnabled: settings.ambientAudioEnabled,
+    ambientAudioVolume: settings.ambientAudioVolume,
+  });
 
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        previousBlock();
-      }
-
-      if (event.key === " " && canContinue) {
-        event.preventDefault();
-        continueFlow();
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [canContinue, continueFlow, nextBlock, previousBlock]);
-
-  useEffect(() => {
-    const ambientAudio = new Audio();
-    ambientAudio.loop = true;
-    ambientAudio.preload = "auto";
-    ambientAudioRef.current = ambientAudio;
-
-    return () => {
-      ambientAudio.pause();
-      ambientAudio.removeAttribute("src");
-      ambientAudio.load();
-      ambientAudioRef.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    const ambientAudio = ambientAudioRef.current;
-    if (!ambientAudio) {
-      return;
-    }
-
-    const canPlayAmbientAudio =
-      settings.ambientAudioEnabled &&
-      controller.isCurrentSceneAudioEnabled &&
-      controller.currentAmbientTrack.length > 0;
-
-    ambientAudio.volume = settings.ambientAudioVolume;
-
-    if (!canPlayAmbientAudio) {
-      ambientAudio.pause();
-      setAmbientAudioError(null);
-      return;
-    }
-
-    const nextTrackUrl = new URL(
-      controller.currentAmbientTrack,
-      window.location.origin,
-    ).href;
-    const didTrackChange = ambientAudio.src !== nextTrackUrl;
-
-    if (didTrackChange) {
-      ambientAudio.src = nextTrackUrl;
-      ambientAudio.currentTime = 0;
-    }
-
-    const playPromise = ambientAudio.play();
-    if (playPromise) {
-      playPromise
-        .then(() => {
-          setAmbientAudioError(null);
-        })
-        .catch(() => {
-          setAmbientAudioError(
-            "A musica ambiente foi bloqueada. Permita audio no navegador para reproduzir.",
-          );
-        });
-    }
-  }, [
-    controller.currentAmbientTrack,
-    controller.isCurrentSceneAudioEnabled,
-    settings.ambientAudioEnabled,
-    settings.ambientAudioVolume,
-  ]);
-
-  async function speakCurrentContent() {
-    setAudioError(null);
-    setIsAudioLoading(true);
-
-    try {
-      const response = await fetch("/api/tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: controller.currentSpeechText,
-          voice: controller.currentAudioVoice,
-        }),
-      });
-
-      const payload = (await response.json()) as
-        | { audioBase64: string; mimeType: string }
-        | { error: string };
-
-      if (!response.ok || "error" in payload) {
-        throw new Error("Falha ao gerar audio.");
-      }
-
-      const audio = new Audio(
-        `data:${payload.mimeType};base64,${payload.audioBase64}`,
-      );
-      await audio.play();
-    } catch {
-      setAudioError("Nao foi possivel tocar o audio agora.");
-    } finally {
-      setIsAudioLoading(false);
-    }
-  }
+  const { audioError, isAudioLoading, speakCurrentContent } = useReaderSpeech({
+    speechText: controller.currentSpeechText,
+    audioVoice: controller.currentAudioVoice,
+  });
 
   const block = controller.currentBlock;
   const isContextBlock = block.type === "context";

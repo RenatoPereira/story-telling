@@ -9,6 +9,7 @@
 - `readerEngine` helpers: all branches.
 - Scene rendering: narration and dialogue states.
 - TTS request handling: success and failure paths.
+- Reader hooks (`use*.ts`): at least one success path and one failure/guard path per hook context.
 
 ## Acceptance Criteria Per Feature
 - Feature has at least one happy-path automated test.

@@ -1,9 +1,9 @@
 .button {
-  border-color: rgb(255 255 255 / 25%);
-  background-color: rgb(255 255 255 / 10%);
-  color: #fff;
+  border-color: color-mix(in srgb, var(--app-fg) 22%, transparent);
+  background-color: color-mix(in srgb, var(--app-fg) 10%, transparent);
+  color: var(--app-fg);
 }
 
 .button:hover {
-  background-color: rgb(255 255 255 / 20%);
+  background-color: color-mix(in srgb, var(--app-fg) 18%, transparent);
 }

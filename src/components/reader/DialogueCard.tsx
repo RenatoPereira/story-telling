@@ -24,7 +24,7 @@ export function DialogueCard({
   onTypingComplete,
 }: DialogueCardProps) {
   const panelClassName =
-    `${styles.dialoguePanel} absolute bottom-8 left-1/2 w-[min(92vw,920px)] -translate-x-1/2 p-0 backdrop-blur-md`;
+    `${styles.dialoguePanel} absolute bottom-8 left-1/2 z-40 w-[min(92vw,920px)] -translate-x-1/2 p-0 backdrop-blur-md`;
   const speakerName = resolveCharacterName(characters, block.speaker.characterId);
   const participants = [
     {
@@ -49,10 +49,11 @@ export function DialogueCard({
 
   function renderParticipantStack(side: "left" | "right") {
     const sideParticipants = side === "left" ? leftParticipants : rightParticipants;
+    const overlapStep = sideParticipants.length > 3 ? 52 : 64;
 
     return sideParticipants.map((participant, index) => {
-      const horizontalOffset = index * 28;
-      const verticalOffset = participant.isSpeaker ? 0 : Math.min(14 + index * 8, 44);
+      const horizontalOffset = index * overlapStep;
+      const verticalOffset = participant.isSpeaker ? 0 : Math.min(index * 5, 12);
 
       return (
         <motion.figure
@@ -60,11 +61,11 @@ export function DialogueCard({
           initial={{ x: side === "left" ? -24 : 24, opacity: 0 }}
           animate={{
             x: 0,
-            opacity: participant.isSpeaker ? 1 : 0.5,
-            scale: participant.isSpeaker ? 1 : 0.86,
+            opacity: participant.isSpeaker ? 1 : 0.65,
+            scale: participant.isSpeaker ? 1 : 0.9,
           }}
           transition={{ duration: 0.28 }}
-          className="absolute h-[min(54vw,520px)] w-[min(33vw,360px)] overflow-hidden shadow-2xl"
+          className="absolute h-[min(38vw,360px)] w-[min(24vw,240px)] overflow-hidden shadow-2xl"
           style={{
             zIndex: sideParticipants.length - index,
             bottom: `${verticalOffset}px`,
@@ -83,11 +84,16 @@ export function DialogueCard({
   }
 
   return (
-    <section className="pointer-events-none fixed inset-0 z-30 min-h-[260px] border-t-px border-t-white">
-      <div className="absolute bottom-[116px] left-[2.4vw] h-[min(58vw,560px)] w-[min(42vw,440px)]">
+    <section
+      className="pointer-events-none fixed inset-0 z-30 min-h-[260px] border-t"
+      style={{
+        borderTopColor: "color-mix(in srgb, var(--app-fg) 22%, transparent)",
+      }}
+    >
+      <div className="absolute bottom-0 left-[2.4vw] z-20 h-[min(44vw,420px)] w-[min(36vw,360px)]">
         {renderParticipantStack("left")}
       </div>
-      <div className="absolute bottom-[116px] right-[2.4vw] h-[min(58vw,560px)] w-[min(42vw,440px)]">
+      <div className="absolute bottom-0 right-[2.4vw] z-20 h-[min(44vw,420px)] w-[min(36vw,360px)]">
         {renderParticipantStack("right")}
       </div>
 

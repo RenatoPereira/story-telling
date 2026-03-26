@@ -13,7 +13,7 @@
   font-size: var(--reader-font-dialogue-name-size);
   line-height: var(--reader-font-dialogue-name-line-height);
   font-weight: var(--reader-font-dialogue-name-weight);
-  color: #f6e5be;
+  color: var(--app-accent);
 }
 
 .dialogueTextWrap {
@@ -26,5 +26,5 @@
   font-size: var(--reader-font-dialogue-text-size);
   line-height: var(--reader-font-dialogue-text-line-height);
   font-weight: var(--reader-font-dialogue-text-weight);
-  color: #f9f1dc;
+  color: var(--app-fg);
 }

@@ -1,7 +1,7 @@
 .contextPanel {
   padding-inline: var(--reader-layout-narrator-padding-x);
   padding-block: var(--reader-layout-narrator-padding-y);
-  color: #f9f1dc;
+  color: var(--app-fg);
 }
 
 .contextText {
